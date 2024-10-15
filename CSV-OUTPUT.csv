@@ -1,0 +1,42 @@
+1682444737234,1409,"{""unit"": ""C"", ""long"": 90, ""description"": ""Room Temperature"", ""lat"": 50, ""range"": [10, 46], ""type"": ""temperature""}"
+
+1682444802346,3808,"{""unit"": ""C"", ""long"": 91, ""description"": ""Room Temperature"", ""lat"": 41, ""range"": [9, 43], ""type"": ""temperature""}"
+
+1682444807375,6777,"{""description"": ""Room Temperature"", ""unit"": ""C"", ""type"": ""temperature"", ""range"": [10, 30], ""lat"": 78, ""long"": 82}"
+
+1682444812335,3596,"{""unit"": ""C"", ""long"": 93, ""description"": ""Room Temperature"", ""lat"": 92, ""range"": [4, 38], ""type"": ""temperature""}"
+
+1682444817359,1490,"{""unit"": ""C"", ""long"": 99, ""description"": ""Room Temperature"", ""lat"": 74, ""range"": [10, 47], ""type"": ""temperature""}"
+
+1682444832269,1412,"{""unit"": ""C"", ""long"": 91, ""description"": ""Room Temperature"", ""lat"": 46, ""range"": [2, 41], ""type"": ""temperature""}"
+
+1682444887451,899,"{""unit"": ""C"", ""long"": 50, ""description"": ""Room Temperature"", ""lat"": 55, ""range"": [10, 39], ""type"": ""temperature""}"
+
+1682444922563,7081,"{""description"": ""Room Temperature"", ""long"": 50, ""range"": [3, 30], ""lat"": 94, ""type"": ""temperature"", ""unit"": ""C""}"
+
+1682444927471,1752,"{""unit"": ""C"", ""long"": 98, ""description"": ""Room Temperature"", ""lat"": 84, ""range"": [7, 33], ""type"": ""temperature""}"
+
+1682444932675,5887,"{""unit"": ""C"", ""long"": 53, ""description"": ""Room Temperature"", ""lat"": 52, ""range"": [9, 52], ""type"": ""temperature""}"
+
+1682444952543,3177,"{""unit"": ""C"", ""long"": 87, ""description"": ""Room Temperature"", ""lat"": 76, ""range"": [1, 35], ""type"": ""temperature""}"
+
+1682445017670,1303,"{""unit"": ""C"", ""long"": 44, ""description"": ""Room Temperature"", ""lat"": 61, ""range"": [0, 48], ""type"": ""temperature""}"
+
+1682445082739,3997,"{""unit"": ""C"", ""long"": 43, ""description"": ""Room Temperature"", ""lat"": 74, ""range"": [2, 57], ""type"": ""temperature""}"
+
+1682445087860,2740,"{""unit"": ""C"", ""long"": 76, ""description"": ""Room Temperature"", ""lat"": 98, ""range"": [3, 37], ""type"": ""temperature""}"
+
+1682445107776,1561,"{""unit"": ""C"", ""long"": 92, ""description"": ""Room Temperature"", ""lat"": 84, ""range"": [7, 55], ""type"": ""temperature""}"
+
+1682445112731,781,"{""unit"": ""C"", ""long"": 67, ""description"": ""Room Temperature"", ""lat"": 60, ""range"": [5, 44], ""type"": ""temperature""}"
+
+1682445137887,6561,"{""description"": ""Room Temperature"", ""unit"": ""C"", ""type"": ""temperature"", ""range"": [9, 57], ""lat"": 92, ""long"": 55}"
+
+1682445192932,6068,"{""type"": ""temperature"", ""lat"": 97, ""long"": 91, ""unit"": ""C"", ""range"": [2, 57], ""description"": ""Room Temperature""}"
+
+1682445218041,6716,"{""type"": ""temperature"", ""lat"": 68, ""long"": 60, ""unit"": ""C"", ""range"": [5, 50], ""description"": ""Room Temperature""}"
+
+1682445218041,6716,"{""type"": ""temperature"", ""lat"": 85, ""long"": 55, ""unit"": ""C"", ""range"": [8, 32], ""description"": ""Room Temperature""}"
+
+1682445218041,6716,"{""type"": ""temperature"", ""lat"": 98, ""long"": 90, ""unit"": ""C"", ""range"": [0, 50], ""description"": ""Room Temperature""}"
+
