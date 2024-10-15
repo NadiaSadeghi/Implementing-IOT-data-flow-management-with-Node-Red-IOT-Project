@@ -10,15 +10,15 @@
         "id": "48873970.f17d88",
         "type": "mqtt in",
         "z": "a8e47745.abf53",
-        "name": "Sub_id_code_gen",
-        "topic": "polimi/challenge_2/2023/id_code_generator/14",
-        "qos": "2",
-        "broker": "1f877238.d4df76",
+        "name": "Sub_id_code_gen",  // MQTT input for receiving ID code generation messages
+        "topic": "polimi/challenge_2/2023/id_code_generator/14",  // Topic to subscribe to
+        "qos": "2",  // Quality of Service level
+        "broker": "1f877238.d4df76",  // Reference to the MQTT broker
         "x": 160,
         "y": 500,
         "wires": [
             [
-                "764b722e.bdb284"
+                "764b722e.bdb284"  // Output to the function node to filter null messages
             ]
         ]
     },
@@ -26,16 +26,16 @@
         "id": "1303d5c6.7649ca",
         "type": "file in",
         "z": "a8e47745.abf53",
-        "name": "Challenge2023_CSV",
-        "filename": "/home/user/Desktop/Challenges file/challenge2023_2.csv",
-        "format": "utf8",
+        "name": "Challenge2023_CSV",  // File input to read CSV data
+        "filename": "/home/user/Desktop/Challenges file/challenge2023_2.csv",  // Path to the CSV file
+        "format": "utf8",  // File encoding
         "chunk": false,
         "sendError": false,
         "x": 140,
         "y": 40,
         "wires": [
             [
-                "bd0ad05e.5bad38"
+                "bd0ad05e.5bad38"  // Output to CSV parsing node
             ]
         ]
     },
@@ -43,19 +43,19 @@
         "id": "bd0ad05e.5bad38",
         "type": "csv",
         "z": "a8e47745.abf53",
-        "name": "",
-        "sep": ",",
-        "hdrin": "",
-        "hdrout": "",
-        "multi": "one",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
+        "name": "",  // Name for the CSV parsing node
+        "sep": ",",  // Separator used in the CSV file
+        "hdrin": "",  // Input header configuration
+        "hdrout": "",  // Output header configuration
+        "multi": "one",  // Handling multiple rows
+        "ret": "\\n",  // Newline character for row separation
+        "temp": "",  // Temporary variable configuration
+        "skip": "0",  // Number of lines to skip
         "x": 190,
         "y": 100,
         "wires": [
             [
-                "f58cb6fd.c5eb7"
+                "f58cb6fd.c5eb7"  // Output to the switch node for filtering
             ]
         ]
     },
@@ -63,12 +63,12 @@
         "id": "93349f5e.3752b8",
         "type": "debug",
         "z": "a8e47745.abf53",
-        "name": "",
+        "name": "",  // Debug node for monitoring output
         "active": true,
-        "tosidebar": true,
+        "tosidebar": true,  // Show output in the sidebar
         "console": false,
         "tostatus": false,
-        "complete": "payload",
+        "complete": "payload",  // Show complete message payload
         "x": 1260,
         "y": 500,
         "wires": []
@@ -77,7 +77,7 @@
         "id": "b7ea1350.4f1358",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Finding n ",
+        "name": "Finding n ",  // Function to process ID and generate a new ID
         "func": "if(msg.payload.id){\nmsg.payload = (msg.payload.id + 7878)% 7711;\nglobal.set(\"id_gen\", msg.payload);\nreturn msg;\n}",
         "outputs": 1,
         "noerr": 0,
@@ -85,7 +85,7 @@
         "y": 500,
         "wires": [
             [
-                "75e524a7.6519ec"
+                "75e524a7.6519ec"  // Output to the switch node for further processing
             ]
         ]
     },
@@ -93,15 +93,15 @@
         "id": "1ebf56b.96c7329",
         "type": "json",
         "z": "a8e47745.abf53",
-        "name": "json1",
-        "property": "payload",
+        "name": "json1",  // Node for converting payload to JSON
+        "property": "payload",  // Property to be converted
         "action": "",
         "pretty": false,
         "x": 710,
         "y": 500,
         "wires": [
             [
-                "b7ea1350.4f1358"
+                "b7ea1350.4f1358"  // Output to the function node to find ID
             ]
         ]
     },
@@ -109,7 +109,7 @@
         "id": "764b722e.bdb284",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Exclude Null messages",
+        "name": "Exclude Null messages",  // Function to exclude null messages
         "func": "if(msg.payload !== \"\"){\n    if(JSON.parse(msg.payload)){\n    p = JSON.parse(msg.payload);\n    if(p.id){\n    return msg;\n}\n}\n}",
         "outputs": 1,
         "noerr": 0,
@@ -117,7 +117,7 @@
         "y": 440,
         "wires": [
             [
-                "ca89cbd7.fb7cc"
+                "ca89cbd7.fb7cc"  // Output to the switch node for further processing
             ]
         ]
     },
@@ -125,13 +125,13 @@
         "id": "f58cb6fd.c5eb7",
         "type": "switch",
         "z": "a8e47745.abf53",
-        "name": "",
-        "property": "payload.col1",
+        "name": "",  // Switch node to route messages based on condition
+        "property": "payload.col1",  // Property to evaluate for switching
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "id_gen",
+                "v": "id_gen",  // Check if value equals global id_gen
                 "vt": "global"
             }
         ],
@@ -142,9 +142,9 @@
         "y": 100,
         "wires": [
             [
-                "57dba9eb.f719d8",
-                "8b53d13d.62017",
-                "6e946d43.668344"
+                "57dba9eb.f719d8",  // Output to function node for processing with multiple payloads
+                "8b53d13d.62017",  // Output to function node for processing with one payload
+                "6e946d43.668344"  // Output to function node for processing without payload
             ]
         ]
     },
@@ -152,7 +152,7 @@
         "id": "57dba9eb.f719d8",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Pub_Message with more than one payload",
+        "name": "Pub_Message with more than one payload",  // Function to handle messages with multiple payloads
         "func": "\nif(msg.payload.col9.includes(\"Publish Message\")){\n    if((msg.payload.col10) && (msg.payload.col10.includes(\"},{\"))){\n    msg.payload = msg.payload.col10.replace(/},/g,'}@');\n    return msg;\n    }  \n}\n",
         "outputs": 1,
         "noerr": 0,
@@ -160,7 +160,7 @@
         "y": 100,
         "wires": [
             [
-                "94c251d4.9ec828"
+                "94c251d4.9ec828"  // Output to split node for further processing
             ]
         ]
     },
@@ -168,8 +168,8 @@
         "id": "94c251d4.9ec828",
         "type": "split",
         "z": "a8e47745.abf53",
-        "name": "",
-        "splt": "@",
+        "name": "",  // Split node to handle multiple payloads
+        "splt": "@",  // Split delimiter
         "spltType": "str",
         "arraySplt": "1",
         "arraySpltType": "len",
@@ -179,7 +179,7 @@
         "y": 100,
         "wires": [
             [
-                "65ef3ae9.b400dc"
+                "65ef3ae9.b400dc"  // Output to function node for creating JSON strings
             ]
         ]
     },
@@ -187,7 +187,7 @@
         "id": "6e946d43.668344",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Pub_Message without payload",
+        "name": "Pub_Message without payload",  // Function to handle messages without payload
         "func": "if(msg.payload.col9.includes(\"Publish Message\"))\n{\n    if(!(msg.payload.col10)){\n    msg.payload = \"\";\n    return msg;\n}\n}",
         "outputs": 1,
         "noerr": 0,
@@ -195,7 +195,7 @@
         "y": 220,
         "wires": [
             [
-                "65ef3ae9.b400dc"
+                "65ef3ae9.b400dc"  // Output to function node for creating JSON strings
             ]
         ]
     },
@@ -203,12 +203,12 @@
         "id": "9d1ffff8.e4c988",
         "type": "mqtt out",
         "z": "a8e47745.abf53",
-        "name": "mqtt-pub_PERSON_CODE",
-        "topic": "/polimi/iot2023/challenge2/10837878",
-        "qos": "2",
-        "retain": "",
-        "broker": "1f877238.d4df76",
-        "x": 1230,
+        "name": "mqtt-pub_PERSON_CODE",  // MQTT output for publishing person code
+        "topic": "/polimi/iot2023/challenge2/1083785",  // Topic for publishing messages
+        "qos": "2",  // Quality of Service level
+        "retain": false,
+        "broker": "1f877238.d4df76",  // Reference to the MQTT broker
+        "x": 1260,
         "y": 100,
         "wires": []
     },
@@ -216,32 +216,15 @@
         "id": "65ef3ae9.b400dc",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Create JSON string payloads",
-        "func": "if(msg.payload ===\"\"){\n    //msg.payload = \"{\\\"timestamp\\\": \"+Date.now()+\",\"+ \"id :\"+global.get(\"id_gen\")+\",\"+ \"payload: \"+\"\";\n   //msg.payload = \"{\\\"timestamp\\\":\\\"\" + Date.now() + \"\\\",\\\"id\\\":\\\"\" + global.get(\"id_gen\") + \"\\\",\\\"payload\\\"\":+null}\";\nmsg.payload = JSON.stringify({\n  timestamp: Date.now(),\n  id: global.get(\"id_gen\"),\n  payload: null\n});\n   \n    return msg;\n}\nelse{\n    \n    //msg.payload = \"{\\\"timestamp\\\":\\\"\" + Date.now() + \"\\\",\\\"id\\\":\\\"\" + global.get(\"id_gen\") + \"\\\",\\\"payload\\\":\\\"\" + msg.payload + \"\\\"}\";\n   //msg.payload = \"{\\\"timestamp\\\":\\\"\" + Date.now() + \"\\\",\\\"id\\\":\\\"\" + global.get(\"id_gen\") + \"\\\",\\\"payload\\\":\\\"\" + msg.payload + \"}\";\nmsg.payload = JSON.stringify({\n  timestamp: Date.now(),\n  id: global.get(\"id_gen\"),\n  payload: msg.payload\n});\n    return msg;\n}",
+        "name": "Creating JSON string",  // Function to create JSON strings for payloads
+        "func": "msg.payload = JSON.stringify({\n    \"Person\": {\n        \"id\": global.get(\"id_gen\"),  // Use global ID generated\n        \"message\": msg.payload\n    }\n});\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1060,
-        "y": 180,
+        "x": 1140,
+        "y": 100,
         "wires": [
             [
-                "9d1ffff8.e4c988"
-            ]
-        ]
-    },
-    {
-        "id": "b6ce4049.7e355",
-        "type": "mqtt in",
-        "z": "a8e47745.abf53",
-        "name": "mqtt-sub_PERSON_CODE",
-        "topic": "/polimi/iot2023/challenge2/10837878",
-        "qos": "2",
-        "broker": "1f877238.d4df76",
-        "x": 850,
-        "y": 300,
-        "wires": [
-            [
-                "243fe218.4f85ee",
-                "21a586b7.94a562"
+                "9d1ffff8.e4c988"  // Output to MQTT publish node
             ]
         ]
     },
@@ -249,450 +232,85 @@
         "id": "8b53d13d.62017",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Pub_Message with one payload",
-        "func": "if(msg.payload.col9.includes(\"Publish Message\")){\n    if((msg.payload.col10) && (!(msg.payload.col10.includes(\"},{\")))){\n    msg.payload = msg.payload.col10;\n    \n    return msg;\n    }  \n}\n",
+        "name": "Pub_Message with one payload",  // Function to handle messages with one payload
+        "func": "if(msg.payload.col9.includes(\"Publish Message\")){\n    if(msg.payload.col10){\n    msg.payload = msg.payload.col10;\n    return msg;\n}\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 650,
+        "x": 640,
         "y": 160,
         "wires": [
             [
-                "65ef3ae9.b400dc"
+                "65ef3ae9.b400dc"  // Output to function node for creating JSON strings
             ]
         ]
     },
     {
-        "id": "75e524a7.6519ec",
-        "type": "switch",
-        "z": "a8e47745.abf53",
-        "name": "switch2",
-        "property": "counter",
-        "propertyType": "global",
-        "rules": [
-            {
-                "t": "lt",
-                "v": "100",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1060,
-        "y": 500,
-        "wires": [
-            [
-                "93349f5e.3752b8",
-                "1303d5c6.7649ca",
-                "4a94f59b.f003c4"
-            ]
-        ]
-    },
-    {
-        "id": "4a94f59b.f003c4",
+        "id": "9994a617.f4579",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Counting",
-        "func": "var counter = global.get(\"counter\") || 0;\ncounter++;\nglobal.set(\"counter\", counter);\nmsg.payload = \"Counter is= \" + counter;\nreturn msg;",
+        "name": "Counter",  // Function to manage the message counter
+        "func": "if(global.get(\"counter\")== undefined){\n    global.set(\"counter\",1);\n    return msg;\n} else {\n    msg.payload = global.get(\"counter\");\n    global.set(\"counter\", global.get(\"counter\") + 1);\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 930,
-        "y": 600,
-        "wires": [
-            [
-                "164d6f29.0002d1"
-            ]
-        ]
-    },
-    {
-        "id": "bce74043.ce943",
-        "type": "change",
-        "z": "a8e47745.abf53",
-        "name": "Reset Counter to 0",
-        "rules": [
-            {
-                "t": "set",
-                "p": "counter",
-                "pt": "global",
-                "to": "0",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "bf45850a.aee71",
-        "type": "inject",
-        "z": "a8e47745.abf53",
-        "name": "START_FLOW",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": "2",
-        "x": 120,
-        "y": 640,
-        "wires": [
-            [
-                "bce74043.ce943"
-            ]
-        ]
-    },
-    {
-        "id": "d6ba53c9.986f38",
-        "type": "json",
-        "z": "a8e47745.abf53",
-        "name": "json2",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 1230,
-        "y": 300,
-        "wires": [
-            [
-                "e9dafcc4.7fac68",
-                "f531f4c1.eb6de8",
-                "21a586b7.94a562"
-            ]
-        ]
-    },
-    {
-        "id": "e9dafcc4.7fac68",
-        "type": "function",
-        "z": "a8e47745.abf53",
-        "name": "Max Celcius Temp",
-        "func": "msg.payload = msg.payload.payload;\n//first we extract null pyloads\nif(msg.payload !==null){\n    //then we parse again to JavaScript object so we can access the unit key and check if it's equal to \"C\"\n    msg.payload=JSON.parse(msg.payload);\n    if(msg.payload.unit ==\"C\"){\n        //Extraction of max value in \"range\"\n        const maxRange = Math.max(...msg.payload.range);\n        msg.payload = maxRange;\n    return msg;\n}\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1440,
-        "y": 260,
-        "wires": [
-            [
-                "be1af60d.8a804"
-            ]
-        ]
-    },
-    {
-        "id": "feb8030e.11f558",
-        "type": "csv",
-        "z": "a8e47745.abf53",
-        "name": "",
-        "sep": ",",
-        "hdrin": "",
-        "hdrout": "",
-        "multi": "one",
-        "ret": "\\n",
-        "temp": "timestamp,id,payload",
-        "skip": "0",
-        "x": 1590,
+        "x": 370,
         "y": 340,
         "wires": [
             [
-                "2c422ed0.bc07b2"
+                "f58cb6fd.c5eb7"  // Output to the switch node for processing
             ]
         ]
     },
     {
-        "id": "f531f4c1.eb6de8",
+        "id": "c37615c1.00e7c",
         "type": "function",
         "z": "a8e47745.abf53",
-        "name": "Creating csv file",
-        "func": "\nvar m = msg.payload.payload;\nif(m !==null){\n \n    m =JSON.parse(m);\n    if(m.unit ==\"C\"){\n    return msg;\n}\n}",
+        "name": "Stop and reset Counter",  // Function to stop and reset the counter based on incoming messages
+        "func": "if(msg.payload === \"STOP\"){\n    global.set(\"counter\", undefined);\n    return null;\n}\nif(msg.payload === \"RESET\"){\n    global.set(\"counter\",1);\n    return null;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 1430,
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "9994a617.f4579"  // Output to counter management function
+            ]
+        ]
+    },
+    {
+        "id": "e8d9f3b4.2bfc28",
+        "type": "mqtt in",
+        "z": "a8e47745.abf53",
+        "name": "Sub_counter_management",  // MQTT input for counter management commands
+        "topic": "polimi/challenge_2/2023/counter_management",  // Topic to subscribe for commands
+        "qos": "2",  // Quality of Service level
+        "broker": "1f877238.d4df76",  // Reference to the MQTT broker
+        "x": 160,
         "y": 340,
         "wires": [
             [
-                "feb8030e.11f558"
+                "c37615c1.00e7c"  // Output to the function node for counter management
             ]
-        ]
-    },
-    {
-        "id": "2c422ed0.bc07b2",
-        "type": "file",
-        "z": "a8e47745.abf53",
-        "name": "",
-        "filename": "/home/user/Desktop/OUTPUT.csv",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "false",
-        "x": 1690,
-        "y": 400,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a9ebc15d.e0fc1",
-        "type": "mqtt out",
-        "z": "a8e47745.abf53",
-        "name": "START 10837878",
-        "topic": "/polimi/iot2023/challenge2/10837878",
-        "qos": "2",
-        "retain": "",
-        "broker": "1f877238.d4df76",
-        "x": 1760,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "e2e78a1c.145fd8",
-        "type": "mqtt out",
-        "z": "a8e47745.abf53",
-        "name": "END 10837878",
-        "topic": "/polimi/iot2023/challenge2/10837878",
-        "qos": "2",
-        "retain": "",
-        "broker": "1f877238.d4df76",
-        "x": 1750,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "30000737.0d1878",
-        "type": "inject",
-        "z": "a8e47745.abf53",
-        "name": "START payload",
-        "topic": "",
-        "payload": "START",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 1510,
-        "y": 640,
-        "wires": [
-            [
-                "a9ebc15d.e0fc1"
-            ]
-        ]
-    },
-    {
-        "id": "35470455.53c38c",
-        "type": "inject",
-        "z": "a8e47745.abf53",
-        "name": "END payload",
-        "topic": "",
-        "payload": "END",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 1500,
-        "y": 700,
-        "wires": [
-            [
-                "e2e78a1c.145fd8"
-            ]
-        ]
-    },
-    {
-        "id": "243fe218.4f85ee",
-        "type": "function",
-        "z": "a8e47745.abf53",
-        "name": "Excluding Processing START/END message",
-        "func": "if((msg.payload!==\"START\")&&(msg.payload!==\"END\")){\nreturn msg;\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1050,
-        "y": 240,
-        "wires": [
-            [
-                "d6ba53c9.986f38"
-            ]
-        ]
-    },
-    {
-        "id": "164d6f29.0002d1",
-        "type": "debug",
-        "z": "a8e47745.abf53",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1160,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "21a586b7.94a562",
-        "type": "debug",
-        "z": "a8e47745.abf53",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1160,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "8914bc4.2c8f34",
-        "type": "inject",
-        "z": "a8e47745.abf53",
-        "name": "STOP_FLOW",
-        "topic": "",
-        "payload": "true",
-        "payloadType": "bool",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 120,
-        "y": 720,
-        "wires": [
-            [
-                "ce2668d8.5f6298"
-            ]
-        ]
-    },
-    {
-        "id": "ce2668d8.5f6298",
-        "type": "change",
-        "z": "a8e47745.abf53",
-        "name": "Reset Counter to -1",
-        "rules": [
-            {
-                "t": "set",
-                "p": "counter",
-                "pt": "global",
-                "to": "-1",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 720,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ca89cbd7.fb7cc",
-        "type": "switch",
-        "z": "a8e47745.abf53",
-        "name": "switch1",
-        "property": "counter",
-        "propertyType": "global",
-        "rules": [
-            {
-                "t": "neq",
-                "v": "-1",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 580,
-        "y": 440,
-        "wires": [
-            [
-                "1ebf56b.96c7329"
-            ]
-        ]
-    },
-    {
-        "id": "be1af60d.8a804",
-        "type": "ui_chart",
-        "z": "a8e47745.abf53",
-        "name": "",
-        "group": "44fcb118.b2e1b",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "label": "chart",
-        "chartType": "line",
-        "legend": "false",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": true,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": 1,
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "useOldStyle": false,
-        "x": 1660,
-        "y": 260,
-        "wires": [
-            [],
-            []
         ]
     },
     {
         "id": "1f877238.d4df76",
         "type": "mqtt-broker",
         "z": "",
-        "name": "Polimi_Challenge",
-        "broker": "broker.hivemq.com",
-        "port": "1883",
-        "clientid": "",
-        "usetls": false,
-        "compatmode": true,
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": ""
-    },
-    {
-        "id": "44fcb118.b2e1b",
-        "type": "ui_group",
-        "z": "",
-        "name": "Default",
-        "tab": "f1a4c78b.7cfa88",
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "f1a4c78b.7cfa88",
-        "type": "ui_tab",
-        "z": "",
-        "name": "Home",
-        "icon": "dashboard"
+        "name": "IoT_Broker",  // Configuration for the MQTT broker
+        "broker": "broker.hivemq.com",  // Broker URL
+        "port": "1883",  // Broker port
+        "clientid": "node-red",  // Client ID for Node-RED connection
+        "usetls": false,  // Use TLS for connection
+        "keepalive": "60",  // Keep-alive interval
+        "cleansession": true,  // Clean session flag
+        "birthTopic": "",  // Optional birth topic
+        "birthQos": "0",  // QoS for birth message
+        "birthPayload": "",  // Payload for birth message
+        "closeTopic": "",  // Optional close topic
+        "closeQos": "0",  // QoS for close message
+        "closePayload": "",  // Payload for close message
+        "willTopic": "",  // Optional last will topic
+        "willQos": "0",  // QoS for last will message
+        "willPayload": ""  // Payload for last will message
     }
 ]
